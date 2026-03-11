@@ -1908,7 +1908,7 @@ def add_part():
         price = request.form["price"]
         quantity = request.form["quantity"]
 
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect("database.db", timeout=10)
         cursor = conn.cursor()
 
         # Bauteil speichern
@@ -1916,6 +1916,9 @@ def add_part():
             INSERT INTO parts (name, description, condition, price, quantity)
             VALUES (?, ?, ?, ?, ?)
         """, (name, description, condition, price, quantity))
+
+        conn.commit()
+        conn.close()
 
         part_id = cursor.lastrowid
 
