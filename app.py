@@ -12,6 +12,8 @@ def compress_image(filepath):
 
     img.save(filepath, optimize=True, quality=75)
 
+from flask import Flask
+import sqlite3
 from flask import Flask, render_template, request, redirect
 import sqlite3
 import os
@@ -1182,18 +1184,32 @@ def edit_part(id):
     return render_template("edit.html", part=part, images=images, files=files)
 if __name__ == "__main__":
 
+ def compress_image(filepath):
     from PIL import Image
+    import pillow_heif
+    import os
 
-def compress_image(filepath):
+    pillow_heif.register_heif_opener()
 
     img = Image.open(filepath)
 
     # maximale Größe
     max_size = (1200, 1200)
-
     img.thumbnail(max_size)
 
+    # HEIC → JPG konvertieren
+    if filepath.lower().endswith(".heic"):
+        new_path = filepath.rsplit(".", 1)[0] + ".jpg"
+
+        img = img.convert("RGB")
+        img.save(new_path, "JPEG", optimize=True, quality=75)
+
+        os.remove(filepath)
+        return new_path
+
+    # normale Bilder komprimieren
     img.save(filepath, optimize=True, quality=75)
+    return filepath
 
 from flask import Flask, render_template, request, redirect
 import sqlite3
