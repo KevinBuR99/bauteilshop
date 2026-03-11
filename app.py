@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from PIL import Image
 
 def compress_image(filepath):
@@ -1181,8 +1181,8 @@ def edit_part(id):
 
     return render_template("edit.html", part=part, images=images, files=files)
 if __name__ == "__main__":
-=======
-from PIL import Image
+
+    from PIL import Image
 
 def compress_image(filepath):
 
@@ -2364,5 +2364,5 @@ def edit_part(id):
 
     return render_template("edit.html", part=part, images=images, files=files)
 if __name__ == "__main__":
->>>>>>> 1af286ea296aa65ec6a521c274623e95ee4546ec
+
     app.run()
