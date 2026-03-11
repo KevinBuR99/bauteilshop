@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-Flask
+flask
 gunicorn
-reportlab
 werkzeug
-=======
-Flask
-gunicorn
+pillow
 reportlab
-werkzeug
->>>>>>> 1af286ea296aa65ec6a521c274623e95ee4546ec
-Pillow
