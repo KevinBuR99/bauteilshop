@@ -1911,10 +1911,9 @@ def add_part():
         conn = sqlite3.connect("database.db", timeout=10)
         cursor = conn.cursor()
 
-        # Bauteil speichern
         cursor.execute("""
-            INSERT INTO parts (name, description, condition, price, quantity)
-            VALUES (?, ?, ?, ?, ?)
+        INSERT INTO parts (name, description, condition, price, quantity)
+        VALUES (?, ?, ?, ?, ?)
         """, (name, description, condition, price, quantity))
 
         conn.commit()
