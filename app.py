@@ -1,5 +1,7 @@
-
 from PIL import Image
+import pillow_heif
+
+pillow_heif.register_heif_opener()
 
 def compress_image(filepath):
 
@@ -13,10 +15,7 @@ def compress_image(filepath):
     img.save(filepath, optimize=True, quality=75)
 
 from flask import Flask
-import sqlite3
 from flask import Flask, render_template, request, redirect
-import sqlite3
-import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from flask import session
