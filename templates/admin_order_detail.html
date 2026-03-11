@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Bestellung</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            width: 700px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .item {
+            background: #2a2a2a;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .total {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Bestellung #{{ order[0] }}</h1>
+
+    <div class="container">
+
+        <p><b>Kunde:</b> {{ order[1] }}</p>
+        <p><b>Datum:</b> {{ order[2] }}</p>
+
+        <h2>Artikel</h2>
+
+        {% for item in items %}
+
+        <div class="item">
+            {{ item[0] }} x{{ item[2] }} = {{ item[1] * item[2] }} €
+        </div>
+
+        {% endfor %}
+
+        <div class="total">
+            <b>Gesamt:</b> {{ total }} €
+        </div>
+
+        <br>
+
+        <a href="/admin/order_pdf/{{ order[0] }}">📄 Rechnung herunterladen</a>
+
+        <br><br>
+
+        <a href="/admin/orders">⬅ Zurück zu Bestellungen</a>
+
+    </div>
+
+</body>
+</html>

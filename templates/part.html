@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        div {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3399ff;
+            }
+
+        .main-image {
+            width: 400px;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+    <title>{{ part[1] }}</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .gallery img {
+            width: 200px;
+            margin: 10px;
+            border-radius: 6px;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #4da6ff;
+        }
+
+        .product-gallery {
+            margin-top: 20px;
+        }
+
+
+        .thumbnails {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .thumb {
+            width: 100px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+            .thumb:hover {
+                transform: scale(1.05);
+            }
+
+        .product-layout {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .product-gallery {
+            flex: 1;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .cart-button {
+            display: inline-block;
+            background-color: #4da6ff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+
+            .cart-button:hover {
+                background-color: #3399ff;
+            }
+
+        .cart-button {
+            display: inline-block;
+            background-color: #4da6ff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+            .cart-button:hover {
+                background-color: #3399ff;
+            }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <a href="/">⬅ Zurück</a>
+
+        <div class="product-layout">
+
+            <div class="product-gallery">
+
+                <img id="mainImage"
+                     src="{{ url_for('static', filename='images/' + images[0][0]) }}"
+                     class="main-image">
+
+                <div class="thumbnails">
+
+                    {% for image in images %}
+
+                    <img src="{{ url_for('static', filename='images/' + image[0]) }}"
+                         class="thumb"
+                         onclick="changeImage(this)">
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <h1>{{ part[1] }}</h1>
+
+                <p><strong>Beschreibung:</strong></p>
+                <p>{{ part[2] }}</p>
+
+                <p><strong>Zustand:</strong> {{ part[3] }}</p>
+
+                <p class="price">{{ part[4] }} €</p>
+
+                {% if files %}
+
+                {% if session.get("user_id") %}
+
+                <a href="/add_to_cart/{{ part[0] }}" class="cart-button">
+                    🛒 In Warenkorb
+                </a>
+
+                {% else %}
+
+                <a href="/user_login">Login um zu kaufen</a>
+
+                {% endif %}
+
+                <h3>Dokumente</h3>
+
+                <ul>
+
+                    {% for file in files %}
+
+                    <li>
+                        <a href="{{ url_for('static', filename='files/' + file[0]) }}" target="_blank">
+                            📄 {{ file[0] }}
+                        </a>
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                {% endif %}
+
+                {% if session.get("admin") %}
+                <br>
+                <a href="/edit/{{ part[0] }}">✏ Bearbeiten</a>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function changeImage(img) {
+            document.getElementById("mainImage").src = img.src;
+        }
+
+    </script>
+
+</body>
+</html>

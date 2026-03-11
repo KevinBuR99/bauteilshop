@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Registrieren</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        input {
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 8px;
+            width: 250px;
+        }
+
+        button {
+            background: #4da6ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Registrieren</h1>
+
+    <form method="POST">
+
+        <p>Email</p>
+        <input name="email" type="email" required>
+
+        <p>Vorname</p>
+        <input name="firstname" required>
+
+        <p>Nachname</p>
+        <input name="lastname" required>
+
+        <p>Firma</p>
+        <input name="company">
+
+        <p>Lieferadresse</p>
+        <input name="address" required>
+
+        <p>Passwort</p>
+        <input type="password" name="password" required>
+
+        <p style="color:orange;">
+            Passwort muss mindestens 8 Zeichen und ein Sonderzeichen enthalten.
+        </p>
+
+        <br><br>
+
+        <button>Registrieren</button>
+
+    </form>
+
+    <br>
+
+    <a href="/user_login">Login</a>
+
+</body>
+
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        div {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3399ff;
+            }
+        .parts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .part-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+
+            .part-card:hover {
+                transform: scale(1.02);
+            }
+
+            .part-card img {
+                width: 100%;
+                border-radius: 6px;
+            }
+
+        .price {
+            font-size: 18px;
+            color: #4da6ff;
+            font-weight: bold;
+        }
+
+        .part-card a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .part-card img {
+            width: 100%;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+            .part-card img:hover {
+                transform: scale(1.03);
+            }
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+            .pagination a {
+                padding: 6px 12px;
+                background: #1e1e1e;
+                border-radius: 6px;
+                text-decoration: none;
+                color: white;
+                transition: 0.2s;
+            }
+
+                .pagination a:hover {
+                    background: #3399ff;
+                }
+
+        .active-page {
+            background: #3399ff !important;
+            font-weight: bold;
+        }
+
+    </style>
+    <title>Bauteile Shop</title>
+</head>
+<body>
+
+    <a href="/admin">Admin Dashboard</a>
+
+    <a href="/account">Mein Konto</a>
+
+    <h1>Mein Bauteile Shop</h1>
+
+
+
+    <form method="GET" action="/">
+
+        <input type="text"
+               name="q"
+               placeholder="Suche..."
+               value="{{ search_query if search_query else '' }}">
+
+        <input type="number"
+               name="min_price"
+               placeholder="Min Preis"
+               value="{{ min_price if min_price else '' }}">
+
+        <input type="number"
+               name="max_price"
+               placeholder="Max Preis"
+               value="{{ max_price if max_price else '' }}">
+
+        <select name="sort">
+
+            <option value="">Sortieren</option>
+
+            <option value="price_asc" {{ 'selected' if sort == 'price_asc' else '' }}>
+                Preis aufsteigend
+            </option>
+
+            <option value="price_desc" {{ 'selected' if sort == 'price_desc' else '' }}>
+                Preis absteigend
+            </option>
+
+        </select>
+
+        <button type="submit">🔎 Filtern</button>
+
+    </form>
+    {% if search_query or min_price or max_price or sort %}
+    <a href="/">Filter zurücksetzen</a>
+    <br><br>
+    {% endif %}
+    <br>
+
+    <br>
+
+    {% if search_query %}
+    <a href="/">Suche zurücksetzen</a>
+    {% endif %}
+
+    {% if session.get("admin") %}
+    <a href="/logout">Logout</a>
+    {% else %}
+    {% if session.get("admin") %}
+
+    <b>Admin</b> |
+    <a href="/add">Neues Bauteil hinzufügen</a> |
+    <a href="/logout">Logout</a>
+
+    {% elif session.get("user_id") %}
+
+    Willkommen {{ session["username"] }} |
+    <a href="/cart">🛒 Warenkorb</a> |
+    <a href="/user_logout">Logout</a>
+
+    {% else %}
+
+    <a href="/login">Admin Login</a> |
+    <a href="/user_login">User Login</a> |
+    <a href="/register">Registrieren</a>
+
+    {% endif %}
+    {% endif %}
+
+    <a href="/add">Neues Bauteil hinzufügen</a>
+
+    <hr>
+
+    <h2>Verfügbare Bauteile:</h2>
+
+    <div class="parts-grid">
+
+        {% for part, images in parts %}
+
+        <div class="part-card">
+
+            <a href="/part/{{ part[0] }}">
+
+                <h3>{{ part[1] }}</h3>
+
+                {% if images %}
+                <img src="{{ url_for('static', filename='images/' + images[0][0]) }}">
+                {% endif %}
+
+            </a>
+
+            <p>{{ part[2] }}</p>
+
+            <p><strong>Zustand:</strong> {{ part[3] }}</p>
+
+            <p class="price">{{ part[4] }} €</p>
+
+            {% if part[5] > 0 %}
+            <p><strong>Lager:</strong> {{ part[5] }} Stück</p>
+            {% else %}
+            <p style="color:red"><strong>Nicht verfügbar</strong></p>
+            {% endif %}
+
+            {% if session.get("user_id") and part[5] > 0 %}
+
+            <a class="cart-button" href="/add_to_cart/{{ part[0] }}">
+                🛒 In Warenkorb
+            </a>
+
+            {% elif not session.get("user_id") and part[5] > 0 %}
+
+            <a href="/user_login">Login um zu kaufen</a>
+
+            {% endif %}
+
+            {% if session.get("admin") %}
+            <a href="/edit/{{ part[0] }}">✏ Bearbeiten</a> |
+            <a href="/delete/{{ part[0] }}"
+               onclick="return confirm('Wirklich löschen?')">
+                🗑 Löschen
+            </a>
+            {% endif %}
+
+        </div>
+
+
+
+
+
+        {% endfor %}
+        <div class="pagination">
+
+            {% if page > 1 %}
+            <a href="?page={{ page-1 }}&q={{ search_query or '' }}&min_price={{ min_price or '' }}&max_price={{ max_price or '' }}&sort={{ sort or '' }}">
+                ⬅
+            </a>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+
+            <a href="?page={{ p }}&q={{ search_query or '' }}&min_price={{ min_price or '' }}&max_price={{ max_price or '' }}&sort={{ sort or '' }}"
+               class="{% if p == page %}active-page{% endif %}">
+                {{ p }}
+            </a>
+
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <a href="?page={{ page+1 }}&q={{ search_query or '' }}&min_price={{ min_price or '' }}&max_price={{ max_price or '' }}&sort={{ sort or '' }}">
+                ➡
+            </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>

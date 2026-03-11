@@ -1,0 +1,131 @@
+<style>
+    body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+
+    a {
+        color: #4da6ff;
+    }
+
+    div {
+        background-color: #1e1e1e;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    input, textarea {
+        background-color: #2a2a2a;
+        color: white;
+        border: 1px solid #444;
+        padding: 5px;
+    }
+
+    button {
+        background-color: #4da6ff;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #3399ff;
+        }
+
+    .checkout-btn {
+        display: inline-block;
+        font-size: 18px;
+        padding: 12px 20px;
+        margin-top: 20px;
+        background-color: #4da6ff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+    }
+
+        .checkout-btn:hover {
+            background-color: #3399ff;
+        }
+</style>
+
+<a href="/">⬅ Zurück zum Shop</a>
+
+<h1>🛒 Dein Warenkorb</h1>
+{% for item in items %}
+
+<div>
+
+    <h3>{{ item.name }}</h3>
+
+    {% if item.image %}
+    <img src="{{ url_for('static', filename='images/' + item.image) }}" style="width:120px;border-radius:8px;">
+    {% endif %}
+
+    <p>Preis: {{ item.price }} €</p>
+
+    <p>
+        <a href="/cart_decrease/{{ item.id }}">➖</a>
+
+        <strong>{{ item.quantity }}</strong>
+
+        <a href="/cart_increase/{{ item.id }}">➕</a>
+    </p>
+
+    <p class="timer"
+       data-minutes="{{ item.minutes }}"
+       data-seconds="{{ item.seconds }}"
+       style="color:orange;">
+        ⏱ Reserviert für noch:
+        <span class="time"></span>
+    </p>
+
+    <a href="/cart_remove/{{ item.id }}">🗑 Entfernen</a>
+
+</div>
+
+
+{% endfor %}
+
+<hr>
+
+<h2>Gesamtpreis: {{ total_price }} €</h2>
+
+<hr>
+
+<a href="/checkout" class="checkout-btn"
+   onclick="return confirm('Bestellung wirklich abschließen?')">
+    ✅ Bestellung abschließen
+</a>
+<script>
+
+    document.querySelectorAll(".timer").forEach(timer => {
+
+        let minutes = parseInt(timer.dataset.minutes)
+        let seconds = parseInt(timer.dataset.seconds)
+
+        const span = timer.querySelector(".time")
+
+        function update() {
+
+            span.textContent = minutes + ":" + String(seconds).padStart(2, "0")
+
+            if (seconds == 0) {
+                if (minutes == 0) return
+                minutes--
+                seconds = 59
+            } else {
+                seconds--
+            }
+
+        }
+
+        update()
+        setInterval(update, 1000)
+
+    })
+
+</script>

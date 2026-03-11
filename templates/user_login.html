@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+        }
+
+        button {
+            padding: 8px 12px;
+        }
+    </style>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        div {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3399ff;
+            }
+    </style>
+
+</head>
+<body>
+
+    <h1>User Login</h1>
+
+    <form method="POST">
+
+        <input name="email" placeholder="email" required>
+        <br><br>
+
+        <input type="password" name="password" placeholder="Passwort" required>
+        <br><br>
+
+        <button>Login</button>
+
+    </form>
+
+    <br>
+
+    <a href="/register">Registrieren</a>
+
+</body>
+</html>

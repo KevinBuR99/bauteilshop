@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        div {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3399ff;
+            }
+    </style>
+    <title>Bauteil hinzufügen</title>
+</head>
+<body>
+    <h1>Neues Bauteil hinzufügen</h1>
+
+    <<form method="POST" enctype="multipart/form-data">
+    >
+    <label>Name:</label><br>
+    <input type="text" name="name"><br><br>
+
+    <label>Beschreibung:</label><br>
+    <textarea name="description"></textarea><br><br>
+
+    <label>Zustand:</label><br>
+    <input type="text" name="condition"><br><br>
+
+    <label>Preis (€):</label><br>
+    <input type="number" step="0.01" name="price"><br><br>
+
+    <label>Menge:</label><br>
+    <input type="number" name="quantity" min="0" value="1">
+    <br><br>
+
+    <label>Bilder hochladen:</label><br>
+    <input type="file" name="images" multiple><br><br>
+
+    <label>PDF Dateien (z.B. Datenblatt)</label>
+    <input type="file" name="files" multiple accept=".pdf">
+
+    <button type="submit">Speichern</button>
+</form>
+
+    <br>
+    <a href="/">Zurück</a>
+</body>
+</html>

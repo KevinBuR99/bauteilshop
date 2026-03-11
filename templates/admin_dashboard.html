@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            width: 800px;
+            margin: auto;
+        }
+
+        .user {
+            background: #1e1e1e;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        button {
+            background: #4da6ff;
+            border: none;
+            padding: 6px 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <a href="/admin/orders">📦 Bestellungen</a>
+
+    <div class="container">
+
+        <h2>Benutzer</h2>
+
+        {% for user in users %}
+
+        <div class="user">
+
+            <b>{{ user[1] }}</b><br>
+
+            {{ user[2] }} {{ user[3] }}<br>
+            Firma: {{ user[4] }}
+
+            <br><br>
+
+            <a href="/admin/edit_user/{{ user[0] }}">Bearbeiten</a> | <a href="/admin/delete_user/{{ user[0] }}">Löschen</a>
+
+        </div>
+
+        {% endfor %}
+
+        <br>
+
+        <a href="/">⬅ Zurück zum Shop</a>
+
+    </div>
+
+</body>
+</html>

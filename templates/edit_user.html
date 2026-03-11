@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>User bearbeiten</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: white;
+        }
+
+        button {
+            background: #4da6ff;
+            border: none;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background: #3399ff;
+            }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>User bearbeiten</h1>
+
+    <div class="container">
+
+        <!-- USER DATEN BEARBEITEN -->
+
+        <form method="POST">
+
+            <label>Email</label> <input type="email" name="email" value="{{ user[1] }}">
+
+            <label>Vorname</label> <input type="text" name="firstname" value="{{ user[2] }}">
+
+            <label>Nachname</label> <input type="text" name="lastname" value="{{ user[3] }}">
+
+            <label>Firma</label> <input type="text" name="company" value="{{ user[4] }}">
+
+            <label>Adresse</label> <input type="text" name="address" value="{{ user[5] }}">
+
+            <button type="submit">Speichern</button>
+
+        </form>
+
+        <br><hr><br>
+
+        <!-- PASSWORT ZURÜCKSETZEN -->
+
+        <h3>Passwort zurücksetzen</h3>
+
+        <form method="POST" action="/admin/reset_password/{{ user[0] }}">
+
+            <label>Neues Passwort</label> <input type="password" name="password" required>
+
+            <button type="submit">Passwort zurücksetzen</button>
+
+        </form>
+
+        <br>
+
+        <a href="/admin">⬅ Zurück zum Admin Dashboard</a>
+
+    </div>
+
+</body>
+</html>
+

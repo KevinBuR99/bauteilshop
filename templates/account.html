@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Mein Konto</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .order {
+            background: #2a2a2a;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Mein Konto</h1>
+
+    <div class="container">
+
+        <h2>Meine Daten</h2>
+
+        <p><b>Email:</b> {{ user[0] }}</p>
+        <p><b>Name:</b> {{ user[1] }} {{ user[2] }}</p>
+        <p><b>Firma:</b> {{ user[3] }}</p>
+        <p><b>Adresse:</b> {{ user[4] }}</p>
+
+        <br>
+
+        <h2>Meine Bestellungen</h2>
+
+        {% if orders %}
+
+        {% for order in orders %}
+
+        <div class="order">
+
+            <b>Bestellung #{{ order[0] }}</b><br>
+            Datum: {{ order[1] }}
+
+            <br><br>
+
+            <a href="/order_success/{{ order[0] }}">Details</a>
+            <br>
+            <a href="/invoice/{{ order[0] }}">📄 Rechnung herunterladen</a>
+
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <p>Noch keine Bestellungen.</p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/user_logout">Logout</a>
+
+    </div>
+
+    <br>
+
+    <a href="/">⬅ Zurück zum Shop</a>
+
+</body>
+</html>

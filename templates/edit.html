@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+
+        div {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            background-color: #2a2a2a;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px;
+        }
+
+        button {
+            background-color: #4da6ff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3399ff;
+            }
+    </style>
+    <title>Bauteil bearbeiten</title>
+</head>
+<body>
+
+    <h1>Bauteil bearbeiten</h1>
+
+    {% if images %}
+    <p>Aktuelle Bilder:</p>
+    {% for image in images %}
+    <div style="display:inline-block; margin:10px;">
+        <img src="{{ url_for('static', filename='images/' + image[1]) }}" width="150"><br>
+        <a href="/delete_image/{{ image[0] }}/{{ part[0] }}"
+           onclick="return confirm('Bild wirklich löschen?')">
+            ❌ Löschen
+        </a>
+    </div>
+    {% endfor %}
+    <br><br>
+    {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label>Name:</label><br>
+            <input type="text" name="name" value="{{ part[1] }}"><br><br>
+
+            <label>Beschreibung:</label><br>
+            <textarea name="description">{{ part[2] }}</textarea><br><br>
+
+            <label>Zustand:</label><br>
+            <input type="text" name="condition" value="{{ part[3] }}"><br><br>
+
+            <label>Preis (€):</label><br>
+            <input type="number" step="0.01" name="price" value="{{ part[4] }}"><br><br>
+
+            <label>Menge:</label><br>
+            <input type="number" name="quantity" value="{{ part[5] }}" min="0">
+            <br><br>
+
+            <label>Neue Bilder hochladen:</label><br>
+            <input type="file" name="images" multiple><br><br>
+
+            <label>Neue PDF Dateien hinzufügen</label>
+            <input type="file" name="files" multiple accept=".pdf">
+
+            <h3>Vorhandene PDFs</h3>
+
+            {% for file in files %}
+
+            <div>
+
+                <a href="{{ url_for('static', filename='files/' + file[1]) }}" target="_blank">
+                    📄 {{ file[1] }}
+                </a>
+
+                <a href="/delete_file/{{ file[0] }}" style="color:red;">
+                    ❌ Löschen
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit">Speichern</button>
+
+        </form>
+
+    <br>
+    <a href="/">Zurück</a>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Bestellungen</title>
+
+    <style>
+
+        body {
+            background: #121212;
+            color: white;
+            font-family: Arial;
+        }
+
+        .container {
+            width: 800px;
+            margin: auto;
+        }
+
+        .order {
+            background: #1e1e1e;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        a {
+            color: #4da6ff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Bestellungen</h1>
+
+    <div class="container">
+
+        {% for order in orders %}
+
+        <div class="order">
+
+            <b>Bestellung #{{ order[0] }}</b><br>
+            Kunde: {{ order[1] }}<br>
+            Datum: {{ order[2] }}
+
+            <br><br>
+
+            <a href="/admin/order/{{ order[0] }}">Bestellung öffnen</a> | <a href="/admin/order_pdf/{{ order[0] }}">Rechnung</a>
+
+        </div>
+
+        {% endfor %}
+
+        <br><br>
+
+        <a href="/admin">⬅ Zurück zum Dashboard</a>
+
+    </div>
+
+</body>
+</html>
